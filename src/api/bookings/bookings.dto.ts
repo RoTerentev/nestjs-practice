@@ -1,14 +1,15 @@
-import { IsNumberString, IsNotEmpty, IsBooleanString } from 'class-validator';
+import { IsNumberString, IsNotEmpty, IsBooleanString, IsOptional } from 'class-validator';
 
 export class BookingsCreateDto {
   @IsNotEmpty()
   @IsNumberString()
   readonly offerId: string;
 
-  @IsNumberString()
   @IsNotEmpty()
+  @IsNumberString()
   readonly hunterId: string;
 
+  @IsOptional()
   @IsBooleanString()
   readonly confirmed?: string;
 }
