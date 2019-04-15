@@ -5,7 +5,7 @@ export class OfferEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({default: () => 'CURRENT_TIMESTAMP'})
   dateStart: Date;
 
   @Column()

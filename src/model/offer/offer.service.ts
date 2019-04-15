@@ -22,9 +22,9 @@ export class OfferService {
 
   create(offersCreateDto: OffersCreateDto) {
 
-    let offerEntity = plainToClass(OfferEntity, offersCreateDto);
-    offerEntity = this.offerRepository.create({
-      ...offerEntity,
+    const offerEntityData = plainToClass(OfferEntity, offersCreateDto);
+    const offerEntity = this.offerRepository.create({
+      ...offerEntityData,
       dateCreated: new Date().toISOString(),
       dateUpdated: new Date().toISOString(),
     });
@@ -33,9 +33,9 @@ export class OfferService {
   }
 
   update(id: number, offersUpdateDto: OffersUpdateDto) {
-    const offerEntity = plainToClass(OfferEntity, offersUpdateDto);
+    const offerEntityData = plainToClass(OfferEntity, offersUpdateDto);
     return this.offerRepository.update(id, {
-      ...offerEntity,
+      ...offerEntityData,
       dateUpdated: new Date().toISOString(),
     });
   }
