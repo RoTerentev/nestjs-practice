@@ -1,9 +1,11 @@
-import { Controller, Param, Body, Get, Post, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Param, Body, Get, Post, Delete, NotFoundException, UseGuards } from '@nestjs/common';
 import { BookingService } from '../../model/booking/booking.service';
 import { BookingEntity } from '../../model/booking/booking.entity';
 import { BookingsCreateDto } from './bookings.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('bookings')
+@UseGuards(AuthGuard('jwt'))
 export class BookingsController {
   constructor(
     private readonly bookingService: BookingService

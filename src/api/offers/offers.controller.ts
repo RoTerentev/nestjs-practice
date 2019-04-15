@@ -1,10 +1,12 @@
-import { Controller, Param, Body, Get, Post, Put, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Param, Body, Get, Post, Put, Delete, NotFoundException, UseGuards } from '@nestjs/common';
 import { OfferService } from '../../model/offer/offer.service';
 import { OfferEntity } from '../../model/offer/offer.entity';
 import { OffersCreateDto, OffersUpdateDto } from './offers.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('offers')
+@UseGuards(AuthGuard('jwt'))
 export class OffersController {
   constructor(
     private readonly offerService: OfferService,
