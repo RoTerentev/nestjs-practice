@@ -1,6 +1,7 @@
-import { IsNumberString, IsNotEmpty, IsString } from 'class-validator';
+import { IsNumberString, IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class OffersCreateDto {
+  @IsOptional()
   readonly dateStart?: string;
 
   @IsNotEmpty()
@@ -24,24 +25,25 @@ export class OffersCreateDto {
 }
 
 export class OffersUpdateDto {
+  @IsOptional()
   readonly dateStart?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   readonly dateEnd?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   readonly description?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumberString()
   readonly latitude?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumberString()
   readonly longitude?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumberString()
   readonly guideId?: string;
 }

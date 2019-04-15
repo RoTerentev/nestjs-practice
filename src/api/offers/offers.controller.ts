@@ -1,7 +1,7 @@
 import { Controller, Param, Body, Get, Post, Put, Delete, NotFoundException } from '@nestjs/common';
 import { OfferService } from '../../model/offer/offer.service';
 import { OfferEntity } from '../../model/offer/offer.entity';
-import { OffersCreateDto } from './offers.dto';
+import { OffersCreateDto, OffersUpdateDto } from './offers.dto';
 
 
 @Controller('offers')
@@ -28,8 +28,8 @@ export class OffersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() offersCreateDto: OffersCreateDto) {
-    return this.offerService.update(+id, offersCreateDto);
+  update(@Param('id') id: string, @Body() offersUpdateDto: OffersUpdateDto) {
+    return this.offerService.update(+id, offersUpdateDto);
   }
 
   @Delete(':id')
