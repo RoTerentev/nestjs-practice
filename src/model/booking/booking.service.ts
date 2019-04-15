@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookingEntity } from './booking.entity';
@@ -14,6 +14,8 @@ export class BookingService {
 
   create(bookingsCreateDto: BookingsCreateDto){
     let bookingEntity = plainToClass(BookingEntity, bookingsCreateDto);
+
+    // TODO: add the hunt and hunter existance checking
     bookingEntity = this.bookingRepository.create({
       ...bookingEntity,
       dateCreated: new Date().toISOString(),
@@ -23,14 +25,16 @@ export class BookingService {
     return this.bookingRepository.save(bookingEntity);
   }
 
-  find(id: number) {
-    return this.bookingRepository.findOne(id);
+  async find(id: number, hunterId: number) {
+    const booking = await this.bookingRepository.findOne({ id, hunterId });
+    if(!booking) throw new NotFoundException('Unknown booking!');
+    return booking;
   }
 
-  async delete(id: number) {
-    const bookingEntity = await this.find(id);
-    const delRes = await this.bookingRepository.delete(id);
-    if (delRes.affected === 1) return bookingEntity;
+  async delete(id: number, hunterId: number) {
+    const booking = await this.find(id, hunterId);
+    const delRes = await this.bookingRepository.delete(booking.id);
+    if (delRes.affected === 1) return booking;
     return null;
   }
 }
