@@ -40,10 +40,12 @@ export class OfferService {
     const offer = await this.find(id, guideId);
     const offerEntityData = plainToClass(OfferEntity, offersUpdateDto);
 
-    return this.offerRepository.update(offer.id, {
+    await this.offerRepository.update(offer.id, {
       ...offerEntityData,
       dateUpdated: new Date().toISOString(),
     });
+
+    return this.find(id);
   }
 
   async delete(id: number, guideId: number) {
