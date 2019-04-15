@@ -9,17 +9,17 @@ export class UserService {
   // TODO: remove stub
   private readonly users = [
     this.entMngr.create(UserEntity, {
-      id: 1,
+      id: 5,
       type: UserTypeEnum.ADMIN,
       phone: "79993332200"
     }),
     this.entMngr.create(UserEntity, {
-      id: 2,
+      id: 1,
       type: UserTypeEnum.GUIDE,
       phone: "79993332210"
     }),
     this.entMngr.create(UserEntity, {
-      id: 4,
+      id: 2,
       type: UserTypeEnum.GUIDE,
       phone: "79993332211"
     }),

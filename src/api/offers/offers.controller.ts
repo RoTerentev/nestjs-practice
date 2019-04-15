@@ -1,9 +1,10 @@
-import { Controller, Param, Body, Get, Post, Put, Delete, NotFoundException, UseGuards } from '@nestjs/common';
+import { Controller, Param, Body, Get, Post, Put, Delete, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
 import { OfferService } from '../../model/offer/offer.service';
 import { OfferEntity } from '../../model/offer/offer.entity';
 import { OffersCreateDto, OffersUpdateDto } from './offers.dto';
 import { AuthGuard } from '@nestjs/passport';
-
+import { Request } from 'express';
+import { UserTypeEnum } from 'src/model/user/user.entity';
 
 @Controller('offers')
 @UseGuards(AuthGuard('jwt'))
@@ -13,7 +14,8 @@ export class OffersController {
   ) {}
 
   @Post()
-  create(@Body() offersCreateDto: OffersCreateDto) {
+  create(@Req() req: Request, @Body() offersCreateDto: OffersCreateDto) {
+    if(req.user.type === UserTypeEnum.HUNTER) throw new UnauthorizedException();
     return this.offerService.create(offersCreateDto);
   }
   
@@ -23,19 +25,17 @@ export class OffersController {
   }
   
   @Get(':id')
-  async read(@Param('id') id: string): Promise<OfferEntity> {
-    const offer = await this.offerService.find(+id);
-    if (!offer) throw new NotFoundException('Unknown offer!');
-    return offer;
+  read(@Param('id') id: string): Promise<OfferEntity> {
+    return this.offerService.find(+id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() offersUpdateDto: OffersUpdateDto) {
-    return this.offerService.update(+id, offersUpdateDto);
+  update(@Req() req: Request, @Param('id') id: string, @Body() offersUpdateDto: OffersUpdateDto) {
+    return this.offerService.update(+id, offersUpdateDto, req.user.id);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<OfferEntity|null> {
-    return this.offerService.delete(+id);
+  delete(@Req() req: Request, @Param('id') id: string): Promise<OfferEntity|null> {
+    return this.offerService.delete(+id,req.user.id);
   }
 }
