@@ -27,7 +27,10 @@ export class BookingService {
     return this.bookingRepository.findOne(id);
   }
 
-  delete(id: number) {
-    return this.bookingRepository.delete(id);
+  async delete(id: number) {
+    const bookingEntity = await this.find(id);
+    const delRes = await this.bookingRepository.delete(id);
+    if (delRes.affected === 1) return bookingEntity;
+    return null;
   }
 }
