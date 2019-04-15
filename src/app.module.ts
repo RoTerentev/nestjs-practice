@@ -3,11 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HuntService } from './model/hunt/hunt.service';
-import { UserService } from './model/user/user.service';
 import { OfferModule } from './model/offer/offer.module';
-import { FowlModule } from './model/fowl/fowl.module';
 import { BookingModule } from './model/booking/booking.module';
-
+import { AuthModule } from './services/auth/auth.module';
+import { UserModule } from './model/user/user.module';
 @Module({
   imports: [
     // TODO: move to config file
@@ -21,11 +20,12 @@ import { BookingModule } from './model/booking/booking.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    AuthModule,
     OfferModule,
-    FowlModule,
     BookingModule,
+    UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService, HuntService, UserService],
+  providers: [AppService, HuntService],
 })
 export class AppModule {}
