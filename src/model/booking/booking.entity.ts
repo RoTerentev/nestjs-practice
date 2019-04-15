@@ -7,7 +7,7 @@ export class BookingEntity {
 
   // TODO: lookup one-to-many etc.
   @Column()
-  offerId: number;
+  huntId: number;
   
   @Column()
   hunterId: number;

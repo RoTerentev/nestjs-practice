@@ -3,7 +3,7 @@ import { IsNumberString, IsNotEmpty, IsBooleanString, IsOptional } from 'class-v
 export class BookingsCreateDto {
   @IsNotEmpty()
   @IsNumberString()
-  readonly offerId: string;
+  readonly huntId: string;
 
   @IsNotEmpty()
   @IsNumberString()
