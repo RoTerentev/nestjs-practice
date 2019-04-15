@@ -16,6 +16,7 @@ export class OffersController {
   @Post()
   create(@Req() req: Request, @Body() offersCreateDto: OffersCreateDto) {
     if(req.user.type === UserTypeEnum.HUNTER) throw new UnauthorizedException();
+    if(req.user.type === UserTypeEnum.GUIDE) return this.offerService.create(Object.assign({}, offersCreateDto, { guideId: req.user.id } ));
     return this.offerService.create(offersCreateDto);
   }
   
